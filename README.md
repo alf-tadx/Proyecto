@@ -13,6 +13,13 @@ Para poder hacer esta recomendación tomará en cuenta características clave co
 Además de recomendar libros, sirve para poder administrar, consultar y guardar información acerca de tus libros. El objetivo del proyecto es poder usar algoritmos sencillos para poder transformar cualquier colección de libros pendientes en una herramienta que te ayude a contestarte ¿y ahora qué leo?
 
 # Algoritmo
-
-
-
+1. Iniciar el programa y cargar la información de los libros guardados. Cada libro tendrá los datos (título, autor, género, número de páginas, dificultad y estado de lectura)
+2. Revisar los libros y seleccionar solamente los que estén pendientes de leer.
+3. Preguntar al usuario que género quiere leer
+4. Preguntar qué nivel de dificultad busca (fácil, medio o difícil)
+5. Preguntar cuánto tiempo tiene para leer.
+6. Tomar cada libro pendiente y comparar sus características con lo que quiere el usuario.
+7. Asignar puntos dependiendo de qué tanto coincida con lo que quiere.
+8. Comparar las puntuaciones de cada libro.
+9. Mostrar las mejores opciones según el puntaje.
+10. Fin del programa
