@@ -1,5 +1,5 @@
-# A01715880- Proyecto 
-Por Alfredo Tadeo Enríquez Becerra - Fundamentos de programación
+# Proyecto "¿Y ahora qué leo?"
+Por Alfredo Tadeo Enríquez Becerra A01715880 - Fundamentos de programación
 
 # Contexto "¿Y ahora qué leo?"
 Desde hace varios años leer es una actividad que me gusta mucho pero conforme han pasado los años he ido comprando y comprando libros hasta acumular una cantidad enorme de pendientes. Cada vez que encuentro un libro que me interesa, ya sea en una librería, en línea o recomendación de un amigo suelo agregarlo a mi colección sin antes haber terminado los libros que ya tengo.
