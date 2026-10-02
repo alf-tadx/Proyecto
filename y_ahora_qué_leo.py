@@ -5,13 +5,6 @@ y con diferentes preguntas va a recomendar
 cual es el mejor para el usuario
 """
 
-# Avance 2 Libre Uso de Funciones
-
-"""
-Para este avance cambie las operaciones por diferentes funciones
-para tener un mayor orden y poder utilizarlas mas veces.
-"""
-
 def calcular_paginas(paginas_hora, tiempo):
     """
     Cantidad de paginas que puedes leer segun el tiempo
@@ -31,6 +24,8 @@ def calcular_paginas_faltantes(paginas_libro, paginas_posibles):
     Paginas que faltan para acabar el libro
     """
     paginas_faltantes = paginas_libro - paginas_posibles
+    if paginas_faltantes <= 0:
+        paginas_faltantes = 0
     return paginas_faltantes
 
 def calcular_porcentaje_leer(paginas_posibles, paginas_libro):
@@ -38,6 +33,8 @@ def calcular_porcentaje_leer(paginas_posibles, paginas_libro):
     Calcular porcentaje que has leido
     """
     porcentaje = (paginas_posibles / paginas_libro) * 100
+    if porcentaje >= 100:
+        porcentaje = 100
     return porcentaje
 
 def imprimir_resultados(titulo_libro, paginas_libro, paginas_posibles,
@@ -53,6 +50,30 @@ def imprimir_resultados(titulo_libro, paginas_libro, paginas_posibles,
     print("Te faltarian", paginas_faltantes,
           "paginas para acabar el libro")
     print("Puedes leer un", porcentaje, "% del libro")
+    
+def terminar_libro (porcentaje):
+    """
+    Usa if para determinar si el usuario
+    acaba o no el libro
+    """
+    if porcentaje >= 100:
+        return "Si puedes acabar el libro :)"
+    else:
+        return "Todavia no puedes acabar el libro :("
+
+def calcular_paginas_hora ( ):
+    """
+    Pregunta si sabes cuantas paginas lees por hora,
+    si no sabes usa el promedio de las referencias
+    """
+    respuesta = int(input("Sabes cuantas paginas lees \
+por hora,si = 1 no = 2"))
+    if respuesta == 1:
+        paginas_hora = float(input("¿Cuántas páginas \
+lees cada hora?"))
+    elif respuesta == 2:
+        paginas_hora = PROMEDIO_PAGINAS_HORA
+    return paginas_hora
 
 """
 Programa principal con datos de un libro como ejemplo
@@ -60,9 +81,10 @@ Programa principal con datos de un libro como ejemplo
 
 TITULO_LIBRO = "The Setting Sun"
 PAGINAS_LIBRO = 174
+PROMEDIO_PAGINAS_HORA = 40
 
 # Datos del usuario
-paginas_hora = float(input("¿Cuántas páginas lees cada hora?"))
+paginas_hora = calcular_paginas_hora ( )
 tiempo = float(input("¿Cuántas horas tienes para leer?"))
 
 # Programa
@@ -73,5 +95,8 @@ paginas_faltantes = calcular_paginas_faltantes \
 porcentaje = calcular_porcentaje_leer(paginas_posibles, PAGINAS_LIBRO)
 
 # Resultados
+print (" ")
 imprimir_resultados(TITULO_LIBRO, PAGINAS_LIBRO, paginas_posibles,
                     horas_libro, paginas_faltantes, porcentaje)
+print (" ")
+print (terminar_libro (porcentaje))
