@@ -23,3 +23,6 @@ Además de recomendar libros, sirve para poder administrar, consultar y guardar 
 8. Comparar las puntuaciones de cada libro.
 9. Mostrar las mejores opciones según el puntaje.
 10. Fin del programa
+
+# Referencias 
+Spencer, L. (2026). Promedio de páginas leídas por hora para adultos y estudiantes - ReadingSpeedTest.net. https://readingspeedtest.net/es/blog/average-pages-read-per-hour-for-adults-and-students
