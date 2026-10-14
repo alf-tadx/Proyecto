@@ -86,12 +86,15 @@ def datos_usuario ():
 
 def datos_libro ():
     """
-    Pregunta el titulo y las paginas del libro
+    Pregunta el titulo y las paginas del libro para
+    agregarlos a la lista
     """
     titulo_libro = input("¿Cual es el titulo del libro? ")
-    paginas_libro = int(input("¿Cuantas paginas tiene el libro? "))
-    return titulo_libro, paginas_libro
-
+    titulos_libro.append(titulo_libro)
+    
+    pagina_libro = int(input("¿Cuantas paginas tiene el libro? "))
+    paginas_libro.append(pagina_libro)
+    
 def calcular_acabas_libro (titulo_libro, paginas_libro, paginas_hora, tiempo):
     """
     Programa que muestra si puedes acabar el libro
@@ -113,35 +116,61 @@ def mostrar_menu ():
     """"
     Muestra las opciones que tiene el menu del programa
     """
-    print ("Bienvenidos a Y a hora que leo?")
-    print ("1. Ver si puedes leer el libro")
-    print ("2. Cambiar los datos del libro")
+    print ("")
+    print ("Bienvenidos a ¿Y a hora que leo?")
+    print ("1. Ver si puedes leer un libro")
+    print ("2. Agregar datos de un libro")
     print ("3. Cambiar velocidad y tiempo")
-    print ("4. Salir :(")
-    
+    print ("4. Ver tu biblioteca")
+    print ("5. Salir :(")
 
-#Programa principal con datos de un libro como ejemplo
+def mostrar_biblioteca (titulos_libro, paginas_libro):
+    """
+    Muestra todos los libros que tiene la biblioteca usando listas
+    """
+    for i in range(len(titulos_libro)):
+        print(i, titulos_libro[i], " ", paginas_libro[i], "paginas" )
 
-TITULO_LIBRO = "The Setting Sun"
-PAGINAS_LIBRO = 174
+def elegir_libro (titulos_libro, paginas_libro):
+    """
+    Sirve para elegir que libro quieres usar para checar
+    si lo puedes acabar o no
+    """
+    mostrar_biblioteca (titulos_libro, paginas_libro)
+    libro = int(input("Que numero de libro quieres usar"))
+    return libro
+
+#Biblioteca de libros con lista
+"""
+Voy a usar listas para guardar la informacion
+de los libros dependiendo de su posicion
+y poder tener mas libros guardados.
+"""
+
+titulos_libro = ["The Setting Sun", "Proyecto Hail Mary", "El piso mil"]
+paginas_libro = [174, 544, 479]
+
 PROMEDIO_PAGINAS_HORA = 40
 
 paginas_hora, tiempo = datos_usuario()
 
 #Menu principal que se repite con while hasta que el usuario elija opcion 4 
 opcion = " "
-while opcion != "4":
+while opcion != "5":
     mostrar_menu()
     opcion = input("Elige una opcion: ")
 
     if opcion == "1":
-        calcular_acabas_libro (TITULO_LIBRO, PAGINAS_LIBRO,
+        libro = elegir_libro (titulos_libro, paginas_libro)
+        calcular_acabas_libro (titulos_libro[libro] , paginas_libro[libro],
                                paginas_hora, tiempo)
     elif opcion == "2":
-        TITULO_LIBRO, PAGINAS_LIBRO = datos_libro()
+        datos_libro()
     elif opcion == "3":
         paginas_hora, tiempo = datos_usuario()
     elif opcion == "4":
+        mostrar_biblioteca (titulos_libro, paginas_libro)
+    elif opcion == "5":
         print("Adios")
     else:
-        print("Opcion no valida, elige 1, 2, 3 o 4")
+        print("Opcion no valida, elige 1, 2, 3, 4 o 5")
