@@ -86,14 +86,17 @@ def datos_usuario ():
 
 def datos_libro ():
     """
-    Pregunta el titulo y las paginas del libro para
-    agregarlos a la lista
+    Pregunta el titulo, las paginas del libro y el genero
+    para agregarlos a cada lista
     """
     titulo_libro = input("¿Cual es el titulo del libro? ")
     titulos_libro.append(titulo_libro)
     
     pagina_libro = int(input("¿Cuantas paginas tiene el libro? "))
     paginas_libro.append(pagina_libro)
+    
+    genero_libro = input("¿Cual es el genero del libro?")
+    generos_libro.append(genero_libro)
     
 def calcular_acabas_libro (titulo_libro, paginas_libro, paginas_hora, tiempo):
     """
@@ -122,24 +125,76 @@ def mostrar_menu ():
     print ("2. Agregar datos de un libro")
     print ("3. Cambiar velocidad y tiempo")
     print ("4. Ver tu biblioteca")
-    print ("5. Salir :(")
+    print ("5. No tengo ni idea de que leer")
+    print ("6. Salir :(")
 
-def mostrar_biblioteca (titulos_libro, paginas_libro):
+def mostrar_biblioteca (titulos_libro, paginas_libro, generos_libro):
     """
     Muestra todos los libros que tiene la biblioteca usando listas
     """
     for i in range(len(titulos_libro)):
-        print(i, titulos_libro[i], " ", paginas_libro[i], "paginas" )
+        print(i, titulos_libro[i], " ", paginas_libro[i], "paginas",
+              " ", generos_libro[i])
 
-def elegir_libro (titulos_libro, paginas_libro):
+def elegir_libro (titulos_libro, paginas_libro, generos_libro):
     """
     Sirve para elegir que libro quieres usar para checar
     si lo puedes acabar o no
     """
-    mostrar_biblioteca (titulos_libro, paginas_libro)
+    mostrar_biblioteca (titulos_libro, paginas_libro, generos_libro)
     libro = int(input("Que numero de libro quieres usar"))
     return libro
 
+def sumar_puntos(fila):
+    """"
+    Suma los puntos de cada fila de
+    la matriz de puntajes para ver cual recomendar
+    """
+    total = 0
+    for puntos in fila:
+        total = total + puntos
+    return total
+
+def calcular_matriz_puntajes (paginas_libro, generos_libro,
+                              genero_usuario, paginas_hora, tiempo):
+    """
+    Va a hacer una matriz de puntaje de cada libro donde
+    haya columnas dependiendo si acabas el libro y si es
+    el genero que buscas
+    """
+    cantidad_libros = len(paginas_libro)
+    puntajes = []
+    for i in range(cantidad_libros):
+        puntajes.append([0,0])
+        
+    paginas_posibles = calcular_paginas(paginas_hora, tiempo)
+    
+    for i in range(cantidad_libros):
+        porcentaje = calcular_porcentaje_leer(paginas_posibles,
+                                              paginas_libro[i])
+        puntajes[i][0] = (porcentaje * PUNTOS_TERMINAR / 100)
+        if generos_libro[i] == genero_usuario:
+            puntajes[i][1] = PUNTOS_GENERO
+    
+    return puntajes
+    
+def mostrar_puntos(titulos_libro, puntajes):
+    """
+    Imprime los puntos de cada libro y su total
+    """
+    print("Puntos de cada libro en tu biblioteca")
+    cantidad_libros = len(titulos_libro)
+    for i in range(cantidad_libros):
+        print(titulos_libro[i], "Terminas el libro?", puntajes[i][0],
+              "genero", puntajes[i][1], "total", sumar_puntos(puntajes[i]))
+
+def recomendar_libro(titulos_libro, paginas_libro, generos_libro,
+                     paginas_hora, tiempo):
+    genero_usuario = input("¿Que genero quiers leer?")
+    puntajes = calcular_matriz_puntajes (paginas_libro, generos_libro,
+                              genero_usuario, paginas_hora, tiempo)
+    mostrar_puntos(titulos_libro, puntajes)
+    
 #Biblioteca de libros con lista
 """
 Voy a usar listas para guardar la informacion
@@ -149,19 +204,25 @@ y poder tener mas libros guardados.
 
 titulos_libro = ["The Setting Sun", "Proyecto Hail Mary", "El piso mil"]
 paginas_libro = [174, 544, 479]
+generos_libro = ["ficcion","ficcion","distopia"]
 
 PROMEDIO_PAGINAS_HORA = 40
 
+#Puntaje si terminas el libro y si coincide con el genero
+PUNTOS_TERMINAR = 80
+PUNTOS_GENERO = 50
+
+#Datos del usuario
 paginas_hora, tiempo = datos_usuario()
 
-#Menu principal que se repite con while hasta que el usuario elija opcion 4 
+#Menu principal que se repite con while hasta que el usuario elija opcion 6 
 opcion = " "
-while opcion != "5":
+while opcion != "6":
     mostrar_menu()
     opcion = input("Elige una opcion: ")
 
     if opcion == "1":
-        libro = elegir_libro (titulos_libro, paginas_libro)
+        libro = elegir_libro (titulos_libro, paginas_libro, generos_libro)
         calcular_acabas_libro (titulos_libro[libro] , paginas_libro[libro],
                                paginas_hora, tiempo)
     elif opcion == "2":
@@ -169,8 +230,11 @@ while opcion != "5":
     elif opcion == "3":
         paginas_hora, tiempo = datos_usuario()
     elif opcion == "4":
-        mostrar_biblioteca (titulos_libro, paginas_libro)
+        mostrar_biblioteca (titulos_libro, paginas_libro, generos_libro)
     elif opcion == "5":
+        recomendar_libro(titulos_libro, paginas_libro, generos_libro,
+                     paginas_hora, tiempo)
+    elif opcion == "6":
         print("Adios")
     else:
-        print("Opcion no valida, elige 1, 2, 3, 4 o 5")
+        print("Opcion no valida, elige 1, 2, 3, 4, 5 o 6")
