@@ -173,6 +173,8 @@ def calcular_matriz_puntajes (paginas_libro, generos_libro,
         porcentaje = calcular_porcentaje_leer(paginas_posibles,
                                               paginas_libro[i])
         puntajes[i][0] = (porcentaje * PUNTOS_TERMINAR / 100)
+        
+        generos_libro[i] = limpiar_texto (generos_libro[i])
         if generos_libro[i] == genero_usuario:
             puntajes[i][1] = PUNTOS_GENERO
     
@@ -186,14 +188,28 @@ def mostrar_puntos(titulos_libro, puntajes):
     cantidad_libros = len(titulos_libro)
     for i in range(cantidad_libros):
         print(titulos_libro[i], "Terminas el libro?", puntajes[i][0],
-              "genero", puntajes[i][1], "total", sumar_puntos(puntajes[i]))
+              "Genero", puntajes[i][1], "Total", sumar_puntos(puntajes[i]))
 
 def recomendar_libro(titulos_libro, paginas_libro, generos_libro,
                      paginas_hora, tiempo):
-    genero_usuario = input("¿Que genero quiers leer?")
+    """
+    Pregunta que genero quieres leer para hacer la recomendacion de
+    tu biblioteca
+    """
+    genero_usuario = input("¿Que genero quieres leer?")
+    genero_usuario = limpiar_texto (genero_usuario)
     puntajes = calcular_matriz_puntajes (paginas_libro, generos_libro,
                               genero_usuario, paginas_hora, tiempo)
     mostrar_puntos(titulos_libro, puntajes)
+    
+def limpiar_texto (texto):
+    """
+    Hace que puedas comparar mejor los textos sin problemas
+    quitando las mayusculas y los espacios
+    """
+    texto = texto.lower()
+    texto = texto.replace(" ","")
+    return texto
     
 #Biblioteca de libros con lista
 """
@@ -202,9 +218,9 @@ de los libros dependiendo de su posicion
 y poder tener mas libros guardados.
 """
 
-titulos_libro = ["The Setting Sun", "Proyecto Hail Mary", "El piso mil"]
-paginas_libro = [174, 544, 479]
-generos_libro = ["ficcion","ficcion","distopia"]
+titulos_libro = ["The Setting Sun", "Proyecto Hail Mary", "El piso mil", "Invisible"]
+paginas_libro = [174, 544, 479, 296]
+generos_libro = ["Ficcion","Ficcion","Distopia","Ficcion"]
 
 PROMEDIO_PAGINAS_HORA = 40
 
