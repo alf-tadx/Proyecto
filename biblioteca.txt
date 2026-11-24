@@ -1,0 +1,5 @@
+The Setting Sun,174,drama
+Kokoro,250,drama
+1984,328,distopia
+Dune,688,cienciaficcion
+El principito,96,fabula
