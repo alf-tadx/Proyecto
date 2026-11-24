@@ -66,12 +66,15 @@ def calcular_paginas_hora ( ):
     Pregunta si sabes cuantas paginas lees por hora,
     si no sabes usa el promedio de las referencias
     """
-    respuesta = int(input("Sabes cuantas paginas lees \
-por hora,si = 1 no = 2"))
+    respuesta = input("Sabes cuantas paginas lees \
+por hora,si = 1 no = 2")
     if respuesta == 1:
         paginas_hora = float(input("¿Cuántas páginas \
 lees cada hora?"))
     elif respuesta == 2:
+        paginas_hora = PROMEDIO_PAGINAS_HORA
+    else:
+        print("Opcion no valida se usara el promedio")
         paginas_hora = PROMEDIO_PAGINAS_HORA
     return paginas_hora
 
