@@ -81,7 +81,7 @@ def datos_usuario ():
     tiene para poder leer
     """
     paginas_hora = calcular_paginas_hora ( )
-    tiempo = float(input("¿Cuántas horas tienes para leer?"))
+    tiempo = int(input("¿Cuántas horas tienes para leer?"))
     return paginas_hora, tiempo
 
 def datos_libro ():
@@ -210,22 +210,50 @@ def limpiar_texto (texto):
     texto = texto.lower()
     texto = texto.replace(" ","")
     return texto
-    
-#Biblioteca de libros con lista
-"""
-Voy a usar listas para guardar la informacion
-de los libros dependiendo de su posicion
-y poder tener mas libros guardados.
-"""
 
-titulos_libro = ["The Setting Sun", "Proyecto Hail Mary", "El piso mil", "Invisible"]
-paginas_libro = [174, 544, 479, 296]
-generos_libro = ["Ficcion","Ficcion","Distopia","Ficcion"]
+def cargar_libros():
+    """
+    Crea listas vacias y por cada linea del archivo lo separa por "," para
+    poder meter la informacion en cada lista
+    """
+    titulos_libros = []
+    paginas_libros = []
+    generos_libros = []
+    
+    f = open("biblioteca.txt", "r")
+    for linea in f:
+        linea = linea.strip()
+        datos = linea.split(",")
+        titulos_libros.append(datos[0])
+        paginas_libros.append(int(datos[1]))
+        generos_libros.append(datos[2])
+    f.close()
+    
+    return titulos_libros, paginas_libros, generos_libros
+
+def guardar_libros(titulos_libros, paginas_libros, generos_libros):
+    """
+    Borra los libros que estaban guardados antes en el archivo y vuelve a
+    sobreescribirlos agregando los nuevos livbros, las paginas se convierten
+    en string de nuevo para guardarlas en el archivo
+    """
+    f = open("biblioteca.txt","w")
+    for i in range(len(titulos_libros)):
+        f.write(titulos_libros[i]+","+ str(paginas_libros[i]) +
+                                ","+ generos_libros[i] + "\n" )
+    f.close()
+
+#Biblioteca de libros con archivos
+"""
+Cambie los libros para utlizar un archivo de la biblioteca en donde esten todos
+y que se guarden los cambios que haga el usuario.
+"""
+titulos_libro, paginas_libro, generos_libro = cargar_libros()
 
 PROMEDIO_PAGINAS_HORA = 40
 
 #Puntaje si terminas el libro y si coincide con el genero
-PUNTOS_TERMINAR = 80
+PUNTOS_TERMINAR = 50
 PUNTOS_GENERO = 50
 
 #Datos del usuario
@@ -243,6 +271,7 @@ while opcion != "6":
                                paginas_hora, tiempo)
     elif opcion == "2":
         datos_libro()
+        guardar_libros(titulos_libro, paginas_libro, generos_libro)
     elif opcion == "3":
         paginas_hora, tiempo = datos_usuario()
     elif opcion == "4":
